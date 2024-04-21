@@ -1,8 +1,8 @@
 Source: DuckSploit
 Section: utils
 Priority: extra
-Version: 1.0.8
-Maintainer: Canarddu38
+Version: 1.1.4
+Maintainer: 4re5 group
 Package: DuckSploit
 Architecture: all
-Description: Example package maintenance (under 60 chars)
+Description: best R.A.T for any platforms
