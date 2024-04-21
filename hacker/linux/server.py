@@ -3,26 +3,31 @@ from time import ctime
 import os
 from colorama import Fore
 import requests
+import atexit
+import sys
+import subprocess
 
-
-android = False
 pro = False
 
-if os.path.exists("/usr/share/DuckSploit/android.txt"):
-    android = True
-    
+
 if os.path.exists("/usr/share/DuckSploit/pro.txt"):
     pro = True
-    
+
 
 HOST = '0.0.0.0'
-if android == True:
-    PORT = 45357
-else:
-    PORT = 53
-    
+PORT = 45357
+
 BUFSIZE = 1024
 ADDR = (HOST,PORT)
+
+
+def update_system():
+    script_path = os.path.abspath(sys.argv[0])
+    #script_path = os.path.abspath(__file__)
+    subprocess.run(['wget','https://raw.githubusercontent.com/canarddu38/DUCKSPLOIT/root/hacker/linux/server.py', '-o', script_path])
+
+
+
 
 while True:
     os.system("clear")
@@ -35,23 +40,22 @@ while True:
     print("  `88888P8 `88888P' `88888P' dP   `YP `88888P' 88Y888P' dP `88888P' dP   dP   ")
     print("                                               88                              ")
     print("                                               dP                              ")
-    print("                            | DuckSploit V1.0.9 |                         ")
+    print("                            | DuckSploit V1.1.4 |                         ")
+    print(Fore.YELLOW+"                            build version: stable")
     if pro == True:
         print(Fore.RED+" > pro version")
-    if android == True:
-        print(Fore.RED+" > android mode")
+    print(Fore.YELLOW + '    [' + Fore.RED + '0' + Fore.YELLOW + '] Exit')
     print(Fore.YELLOW + '    [' + Fore.RED + '1' + Fore.YELLOW + '] Wait')
-    print(Fore.YELLOW + '    [' + Fore.RED + '2' + Fore.YELLOW + '] Toggle android mode')
+    print(Fore.YELLOW + '    [' + Fore.RED + '2' + Fore.YELLOW + '] Credits')
     print(Fore.YELLOW + '    [' + Fore.RED + '3' + Fore.YELLOW + '] Generate payload')
     print(Fore.YELLOW + '    [' + Fore.RED + '4' + Fore.YELLOW + '] Visit our website')
     print(Fore.YELLOW + '    [' + Fore.RED + '5' + Fore.YELLOW + '] Update')
     if pro == True:
        print(Fore.YELLOW + '    [' + Fore.RED + '6' + Fore.YELLOW + '] ToolBox')
-    print(Fore.YELLOW + '    [' + Fore.RED + '99' + Fore.YELLOW + '] Exit')
     if pro == True:
-        menu = input(Fore.GREEN + "Choose option [" + Fore.YELLOW + "1" + Fore.RED + "," + Fore.YELLOW + "2" + Fore.RED + "," + Fore.YELLOW + "3" + Fore.RED + "," + Fore.YELLOW + "4" + Fore.RED + "," + Fore.YELLOW + "5" + Fore.RED + "," + Fore.YELLOW + "6" + Fore.RED + "," + Fore.YELLOW + "99" + Fore.GREEN + "]: ")
+        menu = input(Fore.GREEN + "Choose option [" + Fore.YELLOW + "1" + Fore.RED + "," + Fore.YELLOW + "2" + Fore.RED + "," + Fore.YELLOW + "3" + Fore.RED + "," + Fore.YELLOW + "4" + Fore.RED + "," + Fore.YELLOW + "5" + Fore.RED + "," + Fore.YELLOW + "6" + Fore.RED + "," + Fore.YELLOW + "0" + Fore.GREEN + "]: ")
     else:
-        menu = input(Fore.GREEN + "Choose option [" + Fore.YELLOW + "1" + Fore.RED + "," + Fore.YELLOW + "2" + Fore.RED + "," + Fore.YELLOW + "3" + Fore.RED + "," + Fore.YELLOW + "4" + Fore.RED + "," + Fore.YELLOW + "5" + Fore.RED + "," + Fore.YELLOW + "99" + Fore.GREEN + "]: ")
+        menu = input(Fore.GREEN + "Choose option [" + Fore.YELLOW + "1" + Fore.RED + "," + Fore.YELLOW + "2" + Fore.RED + "," + Fore.YELLOW + "3" + Fore.RED + "," + Fore.YELLOW + "4" + Fore.RED + "," + Fore.YELLOW + "5" + Fore.RED + "," + Fore.YELLOW + "0" + Fore.GREEN + "]: ")
 
     if menu == "1":
         udpSerSock = socket(AF_INET,SOCK_DGRAM)
@@ -61,21 +65,21 @@ while True:
             data,ADDR = udpSerSock.recvfrom(BUFSIZE)
             #if data is None:
             #    break
-	
- 	        #item1 = ":"
-  	        #item2 = ">> "
-  	         #list1 = [ADDR[0],item1,ADDR[1],item2,data]
-            
+
+                 #item1 = ":"
+                  #item2 = ">> "
+                   #list1 = [ADDR[0],item1,ADDR[1],item2,data]
+
             data = data.decode("utf-8")
-            
-            
+
+
             print(data[:-1])
-   	        # print(ADDR[0]":\033[1;32"ADDR[1] "\033[1;33>> " data)
+                   # print(ADDR[0]":\033[1;32"ADDR[1] "\033[1;33>> " data)
             send_data = input(Fore.GREEN + "DS> " + Fore.RESET)
             if send_data is not None:
                 bytes = str.encode(send_data)
                 udpSerSock.sendto(bytes,(ADDR[0],ADDR[1])) 
-    
+
             ### COMMANDS
             send_data = send_data.split()
             if len(send_data) != 0:
@@ -103,24 +107,9 @@ while True:
         udpSerSock.close()
     elif menu == "2":
         os.system("clear")
-        print("Togle android mode") 
-        androidoption = input("Android mode state [on/off]: ")
-        if androidoption == "on":
-            try:
-                with open("/usr/share/DuckSploit/android.txt", 'w') as f:
-                    f.write('nothin')
-            except:
-                continue
-            print("[o] Exited!")
-            break
-        elif androidoption == "off":
-            try:
-                os.remove("/usr/share/DuckSploit/android.txt")
-                print("[o] Exited!")
-                break
-            except:
-                continue
-            
+        url = requests.get("https://github.com/canarddu38/DUCKSPLOIT/raw/root/api/credits.txt")
+        print(url.text)
+        input("press any key to continue...")
     elif menu == "3":
         os.system("clear")
         while True:
@@ -152,10 +141,12 @@ while True:
         os.system("python -mwebbrowser https://ducksploit.com")
     elif menu == "5":
         # update
-        print("hello")
+        print(Fore.YELLOW+"Updating...")
+        atexit.register(update_system)
+        break
     elif menu == "6" and pro == True:
         os.system("python /usr/share/DuckSploit/dstoolbox.py")
-    elif menu == "99":
+    elif menu == "0":
         os.system("clear")
         print(Fore.RED + "[o] Exited from the console...")
         break
